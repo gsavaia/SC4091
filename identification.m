@@ -1,13 +1,15 @@
 %% 
-
 clear all, close all
 load('data_group_35');
 
+%% PLOT DATA
+figure, plot(u, 'blue'); hold on; plot(ys, 'red');
+
 a = 0.1;
-b1 = -0.1;
+b1 = 0.1;
 b2 = 0.1;
 e0 = 0.2;
-e1 = -0.1;
+e1 = 0.1;
 f = 0.1;
 
 x0 = [a;b1;b2;e0;e1;f];
@@ -15,7 +17,22 @@ ub = [inf,inf,inf,inf,inf,inf];
 lb = [-inf,-inf,-inf,-inf,-inf,-inf];
 options = optimoptions('lsqnonlin', 'Algorithm', 'levenberg-marquardt', 'MaxFunEvals', 2000, 'DerivativeCheck', 'off', 'Jacobian', 'off');
 
-x = lsqnonlin( @(x)cost_function(x,u,ys), x0, lb, ub, options)
+%% Find Minima
+x = lsqnonlin( @(x)cost_function(x,u,ys), x0, lb, ub, options);
+disp(x);
+
+%% Check Gradient = 0 for x = x_minima
+grad = gradient_cost_function(x, u, ys);
+disp(grad);
+
+%% System
+P = tf( [0 1 x(1)], [1 x(2) x(3)], 1)
+F = tf( [x(4) x(5)], [1 x(6)], 1)
+L = F*P
+
+estimation_error = sum( (ys - lsim(L,u)).^2 );
+
+disp(estimation_error);
 %%
 % a = 0.1;
 % b1 = 0.1;
