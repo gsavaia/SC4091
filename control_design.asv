@@ -34,5 +34,49 @@ Q = feedback(K,P)
 
 poles_lqg = pole(Q) % Q is AS stable
 
-%% check if solution satisfy "Robust" requirements
+%% check if solution satisfy "Robustness" requirements
 T = feedback(K*P,F);
+
+figure, bode(T)
+infnorm = norm(T,inf) % Robust for Dmin < 1/2.138
+
+%% Noise Sensitivity
+Nq = Q.num{1};
+Dq = Q.den{1};
+
+[Aq,Bq,Cq,Dq] = tf2ss(Nq,Dq);
+[Af,Bf,Cf,Df] = tf2ss(Nf,Df);
+%Aq = 4x4
+%Ap = 2x2
+%Af = 1
+At = [  Aq,                 Bq*Cf,         zeros(4,4),    zeros(4,1),   zeros(4,2),     -Bq*Df*Cp;
+        zeros(1,4),         Af,            zeros(1,4),    zeros(1,1),   zeros(1,2),     -Bf*Cp;
+        zeros(4,4),         zeros(4,1),    Aq,            Bq*Cf,        Bq*Df*Cp,       -Bq*Df*Dp*Cp;
+        zeros(1,4),         zeros(1,1),    zeros(1,4),    Af,           Bf*Cp,          -Bf*Dp*Cp;
+        zeros(2,4),         zeros(2,1),    zeros(2,4),    zeros(2,1),   Ap,             -Bp*Cp;
+        zeros(2,4),         zeros(2,1),    zeros(2,4),    zeros(2,1),   zeros(2,2),     Ap             ];
+Bt = [  -Bq*Df*Dp,          -Bq*Df;
+        -Bf*Dp,             -Bf;
+        -Bq*Df*Dp*Dp,       -Bq*Df*Dp;
+        -Bf*Dp*Dp,          -Bf*Dp;
+        -Bp*Dp,             -Bp;
+        Bp,                 zeros(2,1)  ];
+    
+    
+ At = [  Af,                Bf*Cq,         zeros(1,2),    zeros(4,1),   zeros(4,4),     -Bq*Df*Cp;
+        zeros(4,4),         Aq,            zeros(4,2),    zeros(4,1),   zeros(4,4),     -Bf*Cp;
+        zeros(4,4),         zeros(2,4),    Ap,            Bq*Cf,        Bq*Df*Cp,       -Bq*Df*Dp*Cp;
+        zeros(1,4),         zeros(1,4),    zeros(1,2),    Af,           Bf*Cp,          -Bf*Dp*Cp;
+        zeros(2,4),         zeros(2,4),    zeros(2,2),    zeros(2,1),   Aq,             -Bp*Cp;
+        zeros(2,4),         zeros(2,4),    zeros(2,2),    zeros(2,1),   zeros(2,4),     Ap             ];
+Bt = [  -Bq*Df*Dp,          -Bq*Df;
+        -Bf*Dp,             -Bf;
+        -Bq*Df*Dp*Dp,       -Bq*Df*Dp;
+        -Bf*Dp*Dp,          -Bf*Dp;
+        -Bp*Dp,             -Bp;
+        Bp,                 zeros(2,1)  ];   
+    
+    
+    
+    
+ 
