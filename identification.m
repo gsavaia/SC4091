@@ -23,11 +23,16 @@ disp(x);
 
 %% Check Gradient = 0 for x = x_minima
 grad = gradient_cost_function(x, u, ys);
-disp(grad);
 
 %% System
-P = tf( [0 1 x(1)], [1 x(2) x(3)], 1)
-F = tf( [x(4) x(5)], [1 x(6)], 1)
+Np = [0 1 x(1)];
+Dp = [1 x(2) x(3)];
+P = tf( Np, Dp, -1)
+
+Nf = [x(4) x(5)];
+Df = [1 x(6)];
+F = tf( Nf, Df, 1)
+
 L = F*P
 
 estimation_error = sum( (ys - lsim(L,u)).^2 );
