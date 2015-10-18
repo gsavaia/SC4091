@@ -1,5 +1,0 @@
-function [c, ceq] = robustness_constraint(Nq,Dq,P,Dmin)
-
-Q 
-
-end

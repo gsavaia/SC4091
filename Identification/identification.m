@@ -25,13 +25,15 @@ disp(x);
 grad = gradient_cost_function(x, u, ys);
 
 %% System
-Np = [0 1 x(1)];
-Dp = [1 x(2) x(3)];
-P = tf( Np, Dp, -1)
+NumP = [0 1 x(1)];
+DenP = [1 x(2) x(3)];
+P = tf( NumP, DenP, -1)
 
-Nf = [x(4) x(5)];
-Df = [1 x(6)];
-F = tf( Nf, Df, 1)
+NumF = [x(4) x(5)];
+DenF = [1 x(6)];
+F = tf( NumF, DenF, 1)
+
+save('system', 'P', 'NumP', 'DenP', 'F', 'NumF', 'DenF');
 
 L = F*P
 

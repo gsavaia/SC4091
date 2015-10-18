@@ -1,50 +1,20 @@
-clear all, close all
+clear all;
 
-%% Symbolic Proof for Stability
-syms Nq Dq Nk Dk Nf Df Np Dp %numerator/denominator of Q,K,F and P 
-Q = Nq/Dq;
-K = Nk/Dk;
-P = Np/Dp;
-F = Nf/Df;
+load system
+load lqg_design
 
-K = Q/(1-P*Q*F);
-L = K*P*F;
-S = 1/(1+L);
-disp('Sensitivity Function'); pretty(simplify(S)); 
-%if Df,Dp,Dq contains stable poles then the closed loop tf will be stable as well
-
-%% LQG controller
-clear all; load('systems'); % LOAD SYSTEM
-
-[Ap,Bp,Cp,Dp] = tf2ss(Np,Dp);
-rho = 2e-4;
+% SPECS
+rho = 2e-4; 
 RMSd = 4;
 RMSn = 1;
 
-Klqg = dlqry(Ap,Bp,Cp,Dp,1,rho); %LQG control law
-Lkalman = dlqe(Ap,Bp,Cp,RMSd,RMSn); %Kalman gain
-
-%design regulator (LQG + Kalman)
-[Ac,Bc,Cc,Dc] = dreg(Ap,Bp,Cp,Dp,Klqg,Lkalman); 
-Kss = ss(Ac,Bc,Cc,Dc)
-[Nk, Dk] = ss2tf(Ac,Bc,Cc,Dc);
-
-K = tf(Nk,Dk,-1)
-Q = feedback(K,P)
-
-poles_lqg = pole(Q) % Q is AS stable
-
-%% check if solution satisfy "Robustness" requirements
-T = feedback(K*P,F);
-
-figure, bode(T), title('Complementary Sensitivity Function (LQG)');
-infnorm = norm(T,inf) % Robust for Dmin < 1/2.138 = 0.4677
-
-%% Noise Sensitivity
-[Aq,Bq,Cq,Dq] = tf2ss(Q.num{1},Q.den{1}); % Nq affects Cq and Dq
-[Af,Bf,Cf,Df] = tf2ss(Nf,Df);
+%% TRANSFER FUNCTION BETWEEN [U,Y] AND [D,N] (NOISE SENSITIVITY)
+[Aq,Bq,Cq,Dq] = tf2ss(Q.num{1},Q.den{1}); % Q
+[Af,Bf,Cf,Df] = tf2ss(NumF,DenF); %filter
+[Ap,Bp,Cp,Dp] = tf2ss(NumP,DenP); %plant
 
 %Aq = 4x4 %Ap = 2x2 %Af = 1
+%Aq, Bq are known, that is they do not contain parameters to be optimized
 At = [  Aq,                 Bq*Cf,         zeros(4,4),    zeros(4,1),   zeros(4,2),     -Bq*Df*Cp;
         zeros(1,4),         Af,            zeros(1,4),    zeros(1,1),   zeros(1,2),     -Bf*Cp;
         zeros(4,4),         zeros(4,1),    Aq,            Bq*Cf,        Bq*Df*Cp,       -Bq*Df*Dp*Cp;
@@ -58,6 +28,7 @@ Bt = [  -Bq*Df*Dp,          -Bq*Df;
         -Bp*Dp,             -Bp;
          Bp,                 zeros(2,1)  ];
 
+%% ALTERNATIVE CANONICAL FORM
 % Ct = [  Cq,                 Dq*Cf,         zeros(1,4),  zeros(1,1),     zeros(1,2),     -Dq*Df*Cp;
 %         zeros(1,4),         zeros(1,1),    Cq,          Dq*Cf,          Dq*Df*Cp,       Cp-Dq*Df*Dp*Cp ];
 % 
@@ -81,38 +52,50 @@ Bt = [  -Bq*Df*Dp,          -Bq*Df;
 %         -Bq*Dp,             -Bq;
 %         Bp,                 zeros(2,1)  ];
 
-
+%% LYAPUNOV FUNCTION (needed to compute final objective function)
 W = diag( [RMSd,RMSn] ); %RMS NOISE
 X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
+%% OPTIMIZATION SET-UP
+
 % Initialize optimization procedure and set options.
 opt=optimoptions('fmincon', 'Algorithm','sqp');     % SQP algorithm.
-opt=optimoptions(opt,'Display','iter');  % Display results.
 opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
-opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective
-                                         % function.
+opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
+
 %opt=optimoptions(opt,'GradObj','on');    % Use gradient.
 %opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 
-%opt=optimoptions(opt,'Diagnostics','on');
-opt=optimoptions(opt,'DerivativeCheck','on','FinDiffType','central');
+%opt=optimoptions(opt,'Display','iter');  % Display results.
+%opt=optimoptions(opt,'Diagnostics','on'); % Display diagnostic
+%opt=optimoptions(opt,'DerivativeCheck','on','FinDiffType','central');
 
-Nq = Q.num{1};
-Dq = Q.den{1};
+%% RUN OPT ALGO
+NumQ = Q.num{1}; % Nq from LQG will be our starting point
+DenQ = Q.den{1};
 
-Dmin = 1;
+Dmin_inv = 0.2:0.1:2.5;
 
-[Nq_minima, J, exitflag, info]=...
-      fmincon( @(Nq) noise_sensitivity(Nq,Dq,Cp,Dp,Cf,Df,X,W,rho),Nq,... % goal function
-               [],[],[],[],[],[],...                               % no linear constr
-               @(Nq) robustness_constraint(Nq,Dq,P,Dmin), ...      % non-linear constr
-               opt); % options
+NumQ_minima = zeros(length(Dmin_inv), 5);
+J = zeros(1, length(Dmin_inv));
+exitflag = zeros(1, length(Dmin_inv));
 
-           
+for i=1:length(Dmin_inv)
+    [NumQ_minima(i,:), J(i), exitflag(i), info(i)]=...
+          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho),NumQ,... % goal function
+                   [],[],[],[],[],[],...                               % linear constr
+                   @(NumQ) robustness_constraint(NumQ,DenQ,P,Dmin_inv(i)), ...      % non-linear constr
+                   opt); % options  
+end
 
-    
+figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
 
-    
-    
- 
+figure; title('Sensitivity for different values of Dmin');
+for i=1:length(Dmin_inv(exitflag>0))
+    Q = tf(NumQ_minima(i,:), DenQ, -1);
+    K = feedback(Q, -P*F);
+    bode( feedback(1, K*P*F) ); hold on;
+end
+
+save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');

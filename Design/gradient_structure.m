@@ -1,13 +1,14 @@
-clear all
+clear all;
 
-syms a0 a1 a2 a3 a4
+load system
+load lqg_design
 
-load('systems');
-[Ap,Bp,Cp,Dp] = tf2ss(Np,Dp);
-[Af,Bf,Cf,Df] = tf2ss(Nf,Df);
+syms a0 a1 a2 a3 a4 % Optimization Vector
 
-p = [1 0.372967707790674 0.0927460164703470 0.0360416683099865 1.23421100071623e-05];
+[Ap,Bp,Cp,Dp] = tf2ss(NumP,DenP);
+[Af,Bf,Cf,Df] = tf2ss(NumF,DenF);
 
+p = Q.den{1};
 
 Cq = [a1-a0*p(1), a2-a0*p(2), a3-a0*p(3), a4-a0*p(4)]
 Dq = a0
@@ -18,8 +19,9 @@ Ct = [  Cq,                 Dq*Cf,         zeros(1,4),  zeros(1,1),     zeros(1,
 Dt = [ -Dq*Df*Dp,           -Dq*Df;
         Dp-Dq*Df*Dp*Dp,     -Dq*Df*Dp ];
 
-dCu = double( jacobian(Ct(1,:), [a0, a1, a2, a3, a4]) )'
-dCy = double( jacobian(Ct(2,:), [a0, a1, a2, a3, a4]) )'
-dDu = double( jacobian(Dt(1,:), [a0, a1, a2, a3, a4]) )'
-dDy = double( jacobian(Dt(2,:), [a0, a1, a2, a3, a4]) )'
+dCu = double( jacobian(Ct(1,:), [a0, a1, a2, a3, a4]) )';
+dCy = double( jacobian(Ct(2,:), [a0, a1, a2, a3, a4]) )';
+dDu = double( jacobian(Dt(1,:), [a0, a1, a2, a3, a4]) )';
+dDy = double( jacobian(Dt(2,:), [a0, a1, a2, a3, a4]) )';
 
+save('gradient_J', 'dCu', 'dCy', 'dDu', 'dDy');
