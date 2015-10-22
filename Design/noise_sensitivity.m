@@ -1,4 +1,4 @@
-function [J, G] = noise_sensitivity(NumQ, DenQ, Cp, Dp, Cf, Df, X, W, rho)
+function [J, G] = noise_sensitivity(NumQ, DenQ, Cp, Dp, Cf, Df, X, W, rho, grad)
 
     [Aq,Bq,Cq,Dq] = tf2ss(NumQ,DenQ);
 
@@ -13,7 +13,11 @@ function [J, G] = noise_sensitivity(NumQ, DenQ, Cp, Dp, Cf, Df, X, W, rho)
     J = ZZ(2,2) + rho * ZZ(1,1);
 
     if nargout > 1
-        load('gradient_J'); %only for test (slow implementation)
+        %load('gradient_J'); %only for test (slow implementation)
+        dCy = grad.dCy;
+        dCu = grad.dCu;
+        dDy = grad.dDy;
+        dDu = grad.dDu;
         
         Cu = Ct(1,:); Du = Dt(1,:);
         Cy = Ct(2,:); Dy = Dt(2,:);

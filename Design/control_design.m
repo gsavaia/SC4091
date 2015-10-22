@@ -63,9 +63,11 @@ opt=optimoptions('fmincon', 'Algorithm','sqp');     % SQP algorithm.
 opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
 opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
+opt=optimoptions(opt,'MaxFunEval',5000);
+opt=optimoptions(opt,'MaxIter', 5000);
 
-%opt=optimoptions(opt,'GradObj','on');    % Use gradient.
-%opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
+opt=optimoptions(opt,'GradObj','on');    % Use gradient.
+opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 
 %opt=optimoptions(opt,'Display','iter');  % Display results.
 %opt=optimoptions(opt,'Diagnostics','on'); % Display diagnostic
@@ -75,7 +77,9 @@ opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints
 NumQ = Q.num{1}; % Nq from LQG will be our starting point
 DenQ = Q.den{1};
 
-Dmin_inv = 0.2:0.1:2.5;
+load gradient_J
+
+Dmin_inv = 0.2:0.05:2.5;
 
 NumQ_minima = zeros(length(Dmin_inv), 5);
 J = zeros(1, length(Dmin_inv));
@@ -83,10 +87,12 @@ exitflag = zeros(1, length(Dmin_inv));
 
 for i=1:length(Dmin_inv)
     [NumQ_minima(i,:), J(i), exitflag(i), info(i)]=...
-          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho),NumQ,... % goal function
+          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... % goal function
                    [],[],[],[],[],[],...                               % linear constr
-                   @(NumQ) robustness_constraint(NumQ,DenQ,P,Dmin_inv(i)), ...      % non-linear constr
-                   opt); % options  
+                   @(NumQ) robustness_constraint(NumQ,DenQ,P,F,Dmin_inv(i)), ...      % non-linear constr
+                   opt); % options 
+    
+    NumQ = NumQ_minima(i,:);
 end
 
 figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
