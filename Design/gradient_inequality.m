@@ -27,7 +27,7 @@ Bt = [  -Bq*Df*Dp,          -Bq*Df;
         -Bp*Dp,             -Bp;
          Bp,                 zeros(2,1)  ];
      
-W = diag( [RMSd,RMSn] ); %RMS NOISE
+W = diag( [RMSd^2,RMSn^2] ); %RMS NOISE
 X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 tau = eye(5);

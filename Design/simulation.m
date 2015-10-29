@@ -17,10 +17,9 @@ varN = var(N), varD = var(D)
 
 
 %% Dmin = 1;
-x = 1;
+x = 0.5;
 Q1 = tf( NumQ_minima( Dmin_inv==x, : ), DenQ, -1 );
 K1 = feedback(Q1, -P*F);
-K1 = K
 Q1
 disp(['J = ', num2str(J( Dmin_inv==x ) )]);
 
@@ -28,7 +27,6 @@ disp(['J = ', num2str(J( Dmin_inv==x ) )]);
 x = 2;
 Q05 = tf( NumQ_minima( Dmin_inv==x, : ), DenQ, -1 );
 K05 = feedback(Q05, -P*F);
-
 Q05
 disp(['J = ', num2str(J( Dmin_inv==x ))]);
 

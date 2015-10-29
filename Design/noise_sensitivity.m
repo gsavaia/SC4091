@@ -13,7 +13,6 @@ function [J, G] = noise_sensitivity(NumQ, DenQ, Cp, Dp, Cf, Df, X, W, rho, grad)
     J = ZZ(2,2) + rho * ZZ(1,1);
 
     if nargout > 1
-        %load('gradient_J'); %only for test (slow implementation)
         dCy = grad.dCy;
         dCu = grad.dCu;
         dDy = grad.dDy;

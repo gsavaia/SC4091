@@ -41,8 +41,8 @@ opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
 opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective
                                          % function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
-opt=optimoptions(opt,'GradObj','on');    % Use gradient.
-opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
+% opt=optimoptions(opt,'GradObj','on');    % Use gradient.
+% opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 %
 % For a first run of this m-file, you may want to uncomment the following
 % two lines, which cause extra diagnostic information to be printed and an
@@ -52,7 +52,7 @@ opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 %%opt=optimoptions(opt,'DerivativeCheck','on','FinDiffType','central');
 
 % Compute the trade-off curve.
-dv_list=[20:-1:3];                   % List of desired values for M11.
+dv_list=[4:0.05:8];                   % List of desired values for M11.
 results=zeros(length(dv_list),8);    % Initialization of results.
 f_counter=0;                         % Counter for function evaluations.
 i_counter=0;                         % Counter for iterations.
@@ -76,6 +76,6 @@ end
 disp(['Total number of function evaluations: ',num2str(f_counter)]);
 disp(['Total number of iterations: ',num2str(i_counter)]);
 
-plot(results(:,1),results(:,2));
+figure, bar(results(:,1),results(:,2));
 xlabel('1/D_{min}');
 ylabel('J');

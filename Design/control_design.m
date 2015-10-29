@@ -53,7 +53,7 @@ Bt = [  -Bq*Df*Dp,          -Bq*Df;
 %         Bp,                 zeros(2,1)  ];
 
 %% LYAPUNOV FUNCTION (needed to compute final objective function)
-W = diag( [RMSd,RMSn] ); %RMS NOISE
+W = diag( [RMSd^2,RMSn^2] ); %RMS NOISE
 X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 %% OPTIMIZATION SET-UP
@@ -69,6 +69,7 @@ opt=optimoptions(opt,'MaxIter', 5000);
 opt=optimoptions(opt,'GradObj','on');    % Use gradient.
 opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 
+%opt=optimoptions(opt,'Display','off') ;
 %opt=optimoptions(opt,'Display','iter');  % Display results.
 %opt=optimoptions(opt,'Diagnostics','on'); % Display diagnostic
 %opt=optimoptions(opt,'DerivativeCheck','on','FinDiffType','central');
@@ -76,32 +77,38 @@ opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 %% RUN OPT ALGO
 NumQ = Q.num{1}; % Nq from LQG will be our starting point
 DenQ = Q.den{1};
-
 load gradient_J
 
-Dmin_inv = 0.2:0.05:2.5;
+Dmin_inv = 0.2:0.1:2.5;
 
 NumQ_minima = zeros(length(Dmin_inv), 5);
 J = zeros(1, length(Dmin_inv));
 exitflag = zeros(1, length(Dmin_inv));
 
-for i=1:length(Dmin_inv)
-    [NumQ_minima(i,:), J(i), exitflag(i), info(i)]=...
-          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... % goal function
+NumQ_init = NumQ;
+
+for i=1:length(Dmin_inv)    
+    [NumQ, J(i), exitflag(i), info(i)]=...
+          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ_init,... % goal function
                    [],[],[],[],[],[],...                               % linear constr
                    @(NumQ) robustness_constraint(NumQ,DenQ,P,F,Dmin_inv(i)), ...      % non-linear constr
                    opt); % options 
     
-    NumQ = NumQ_minima(i,:);
+    NumQ_minima(i,:) = NumQ;
+    
+    disp(Dmin_inv(i));
+    disp(NumQ);
+    disp(exitflag(i));
+    disp('#######################################');
 end
 
 figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
 
 figure; title('Sensitivity for different values of Dmin');
 for i=1:length(Dmin_inv(exitflag>0))
-    Q = tf(NumQ_minima(i,:), DenQ, -1);
-    K = feedback(Q, -P*F);
-    bode( feedback(1, K*P*F) ); hold on;
+    Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
+    K_minima = feedback(Q_minima, -P*F);
+    bode( feedback(1, K_minima*P*F) ); hold on;
 end
 
 save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');

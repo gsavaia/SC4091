@@ -27,7 +27,7 @@ Bt = [  -Bq*Df*Dp,          -Bq*Df;
         -Bp*Dp,             -Bp;
          Bp,                 zeros(2,1)  ];
      
-W = diag( [RMSd,RMSn] ); %RMS NOISE
+W = diag( [RMSd^2,RMSn^2] ); %RMS NOISE
 X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 tau = eye(5);
@@ -39,7 +39,7 @@ delta = 1e-6;
 % result = zeros(5,1);
 
 %% OBJECTIVE FUNCTION
-offset = 9*ones(1,5);
+offset = 0*ones(1,5);
 NumQ = NumQ+offset;
 
 [J,G] = noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient);
@@ -52,7 +52,7 @@ end
 result = G-Gdiff
 
 %% CONSTRAINT
-offset = 9*ones(1,5);
+offset = 0*ones(1,5);
 NumQ = NumQ+offset;
 
 [J,~,G,~] = robustness_constraint(NumQ,DenQ,P,F,1);

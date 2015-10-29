@@ -7,7 +7,7 @@ RMSd = 4;
 RMSn = 1;
 
 Klqg = dlqry(Ap,Bp,Cp,Dp,1,rho); %LQG control law
-Lkalman = dlqe(Ap,Bp,Cp,RMSd,RMSn); %Kalman gain
+Lkalman = dlqe(Ap,Bp,Cp,RMSd^2,RMSn^2); %Kalman gain
 
 %% DESIGN REGULATOR (LQG + Kalman)
 [Ac,Bc,Cc,Dc] = dreg(Ap,Bp,Cp,Dp,Klqg,Lkalman); 
