@@ -60,7 +60,7 @@ X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 % Initialize optimization procedure and set options.
 opt=optimoptions('fmincon', 'Algorithm','sqp');     % SQP algorithm.
-opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
+opt=optimoptions(opt,'TolX',1e-12);       % Termination tolerance for parameters.
 opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
 opt=optimoptions(opt,'MaxFunEval',5000);
@@ -79,7 +79,7 @@ NumQ = Q.num{1}; % Nq from LQG will be our starting point
 DenQ = Q.den{1};
 load gradient_J
 
-Dmin_inv = 0.2:0.1:2.5;
+Dmin_inv = 0.2:0.05:2.5;
 
 NumQ_minima = zeros(length(Dmin_inv), 5);
 J = zeros(1, length(Dmin_inv));
@@ -89,7 +89,7 @@ NumQ_init = NumQ;
 
 for i=1:length(Dmin_inv)    
     [NumQ, J(i), exitflag(i), info(i)]=...
-          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ_init,... % goal function
+          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... % goal function
                    [],[],[],[],[],[],...                               % linear constr
                    @(NumQ) robustness_constraint(NumQ,DenQ,P,F,Dmin_inv(i)), ...      % non-linear constr
                    opt); % options 
@@ -98,6 +98,7 @@ for i=1:length(Dmin_inv)
     
     disp(Dmin_inv(i));
     disp(NumQ);
+    disp(NumQ_init);
     disp(exitflag(i));
     disp('#######################################');
 end
@@ -111,4 +112,4 @@ for i=1:length(Dmin_inv(exitflag>0))
     bode( feedback(1, K_minima*P*F) ); hold on;
 end
 
-save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');
+save('control_design', NumQ_minima', 'DenQ', 'Dmin_inv', 'J');
