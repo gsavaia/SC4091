@@ -32,11 +32,6 @@ X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 tau = eye(5);
 delta = 1e-6;
-% 
-% J = zeros(5,1);
-% G = zeros(5,1);
-% Gdiff = zeros(5,1);
-% result = zeros(5,1);
 
 %% OBJECTIVE FUNCTION
 offset = 0*ones(1,5);
@@ -49,7 +44,7 @@ for i=1:5
     Gdiff(i,1) = (Jdelta-J)/delta;
 end
 
-result = G-Gdiff
+approximation_error = (G-Gdiff)'
 
 %% CONSTRAINT
 offset = 0*ones(1,5);
@@ -62,4 +57,4 @@ for i=1:5
     Gdiff(i,1) = (Jdelta-J)/delta;
 end
 
-result = G-Gdiff
+approximation_error = (G-Gdiff)

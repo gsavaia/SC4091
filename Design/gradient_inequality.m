@@ -34,19 +34,23 @@ tau = eye(5);
 
 %% OBJECTIVE FUNCTION
 for i=1:5
-    [J,G] = noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient);
-    [Jtau] = noise_sensitivity(NumQ+tau(i,:),DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient);
-    result = Jtau-J-G*tau(i,:);
+    [J(i),G] = noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient);
+    [Jtau(i)] = noise_sensitivity(NumQ+tau(i,:),DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient);
+    Gtau(i) = G'*tau(:,i);
+    result(i) = Jtau(i)-J(i)-G'*tau(:,i) >= 0;
 end
 
-result
+result,J, Jtau, Gtau
+table_report = [Jtau;J;Gtau]'
 
 %% CONSTRAINT
 for i=1:5
-    [J,~,G,~] = robustness_constraint(NumQ,DenQ,P,F,1);
-    [Jtau] = robustness_constraint(NumQ+tau(i,:),DenQ,P,F,1);
-    result = Jtau-J-G*tau(i,:);
+    [J(i),~,G,~] = robustness_constraint(NumQ,DenQ,P,F,1);
+    [Jtau(i)] = robustness_constraint(NumQ+tau(i,:),DenQ,P,F,1);
+    Gtau(i) = G'*tau(:,i);
+    result(i) = Jtau(i)-J(i)-G'*tau(:,i) >= 0;
 end
 
-result
+result, J, Jtau, Gtau
+table_report = [Jtau;J;Gtau]'
 
