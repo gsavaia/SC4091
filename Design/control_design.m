@@ -89,7 +89,7 @@ NumQ_init = ones(1,5);%NumQ;
 
 for i=1:length(Dmin_inv)    
     [NumQ, J(i), exitflag(i), info(i)]=...
-          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ_init,... % goal function
+          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... % goal function
                    [],[],[],[],[],[],...                               % linear constr
                    @(NumQ) robustness_constraint(NumQ,DenQ,P,F,Dmin_inv(i)), ...      % non-linear constr
                    opt); % options 
@@ -98,18 +98,18 @@ for i=1:length(Dmin_inv)
     
     disp(Dmin_inv(i));
     disp(NumQ);
-    disp(NumQ_init);
+    %disp(NumQ_init);
     disp(exitflag(i));
     disp('#######################################');
 end
 
-figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
-
-figure; title('Sensitivity for different values of Dmin');
-for i=1:length(Dmin_inv(exitflag>0))
-    Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
-    K_minima = feedback(Q_minima, -P*F);
-    bode( feedback(1, K_minima*P*F) ); hold on;
-end
-
-save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');
+% figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
+% 
+% figure; title('Sensitivity for different values of Dmin');
+% for i=1:length(Dmin_inv(exitflag>0))
+%     Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
+%     K_minima = feedback(Q_minima, -P*F);
+%     bode( feedback(1, K_minima*P*F) ); hold on;
+% end
+% 
+% save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');
