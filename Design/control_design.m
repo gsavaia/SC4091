@@ -60,7 +60,7 @@ X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 % Initialize optimization procedure and set options.
 opt=optimoptions('fmincon', 'Algorithm','sqp');     % SQP algorithm.
-opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
+opt=optimoptions(opt,'TolX',1e-12);       % Termination tolerance for parameters.
 opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
 opt=optimoptions(opt,'MaxFunEval',5000);
@@ -79,7 +79,7 @@ NumQ = Q.num{1}; % Nq from LQG will be our starting point
 DenQ = Q.den{1};
 load gradient_J
 
-Dmin_inv = 0.2:0.05:2.5;
+Dmin_inv = 0.2:0.1:2.5;
 
 NumQ_minima = zeros(length(Dmin_inv), 5);
 J = zeros(1, length(Dmin_inv));
