@@ -12,16 +12,11 @@ function [J, G] = noise_sensitivity(NumQ, DenQ, Cp, Dp, Cf, Df, X, W, rho, grad)
 
     J = ZZ(2,2) + rho * ZZ(1,1);
 
-    if nargout > 1
-        dCy = grad.dCy;
-        dCu = grad.dCu;
-        dDy = grad.dDy;
-        dDu = grad.dDu;
-        
+    if nargout > 1        
         Cu = Ct(1,:); Du = Dt(1,:);
         Cy = Ct(2,:); Dy = Dt(2,:);
         
-        G = 2*( dCy*X*Cy' + dDy*W*Dy' ) + 2*rho*( dCu*X*Cu' + dDu*W*Du' ); 
+        G = 2*( grad.dCy*X*Cy' + grad.dDy*W*Dy' ) + 2*rho*( grad.dCu*X*Cu' + grad.dDu*W*Du' ); 
     end
 
 end
