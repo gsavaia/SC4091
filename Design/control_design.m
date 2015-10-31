@@ -28,7 +28,7 @@ Bt = [  -Bq*Df*Dp,          -Bq*Df;
         -Bp*Dp,             -Bp;
          Bp,                 zeros(2,1)  ];
 
-%% ALTERNATIVE CANONICAL FORM
+%%ALTERNATIVE CANONICAL FORM
 % Ct = [  Cq,                 Dq*Cf,         zeros(1,4),  zeros(1,1),     zeros(1,2),     -Dq*Df*Cp;
 %         zeros(1,4),         zeros(1,1),    Cq,          Dq*Cf,          Dq*Df*Cp,       Cp-Dq*Df*Dp*Cp ];
 % 
@@ -60,11 +60,11 @@ X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 % Initialize optimization procedure and set options.
 opt=optimoptions('fmincon', 'Algorithm','sqp');     % SQP algorithm.
-opt=optimoptions(opt,'TolX',1e-12);       % Termination tolerance for parameters.
+opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
 opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
-opt=optimoptions(opt,'MaxFunEval',5000);
-opt=optimoptions(opt,'MaxIter', 5000);
+opt=optimoptions(opt,'MaxFunEval',5000); % Maximum number of times f is evaluated
+opt=optimoptions(opt,'MaxIter', 5000);   % Maximum number of iterations allowed
 
 opt=optimoptions(opt,'GradObj','on');    % Use gradient.
 opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
@@ -85,8 +85,6 @@ NumQ_minima = zeros(length(Dmin_inv), 5);
 J = zeros(1, length(Dmin_inv));
 exitflag = zeros(1, length(Dmin_inv));
 
-NumQ_init = ones(1,5);%NumQ;
-
 for i=1:length(Dmin_inv)    
     [NumQ, J(i), exitflag(i), info(i)]=...
           fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... % goal function
@@ -98,7 +96,7 @@ for i=1:length(Dmin_inv)
     
     disp(Dmin_inv(i));
     disp(NumQ);
-    %disp(NumQ_init);
+    disp(info(i).iterations);
     disp(exitflag(i));
     disp('#######################################');
 end
