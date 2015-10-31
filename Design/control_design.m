@@ -86,7 +86,6 @@ J = zeros(1, length(Dmin_inv));
 exitflag = zeros(1, length(Dmin_inv));
 
 NumQ_init = ones(1,5);%NumQ;
-NumQ_init2 = NumQ;
 
 for i=1:length(Dmin_inv)    
     [NumQ, J(i), exitflag(i), info(i)]=...
