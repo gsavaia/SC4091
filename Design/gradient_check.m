@@ -7,11 +7,11 @@ load system
 rho = 2e-4; 
 RMSd = 4;
 RMSn = 1;
-NumQ = Q.num{1};
+NumQlqg = Q.num{1};
 DenQ = Q.den{1};
 
 [Ap,Bp,Cp,Dp] = tf2ss(NumP,DenP);
-[Aq,Bq,Cq,Dq] = tf2ss(NumQ,DenQ);
+[Aq,Bq,Cq,Dq] = tf2ss(NumQlqg,DenQ);
 [Af,Bf,Cf,Df] = tf2ss(NumF,DenF); %filter
 
 At = [  Aq,                 Bq*Cf,         zeros(4,4),    zeros(4,1),   zeros(4,2),     -Bq*Df*Cp;
@@ -34,8 +34,8 @@ tau = eye(5);
 delta = 1e-6;
 
 %% OBJECTIVE FUNCTION
-offset = 0*ones(1,5);
-NumQ = NumQ+offset;
+offset = 2*ones(1,5);
+NumQ = NumQlqg+offset;
 
 [J,G] = noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient);
 
@@ -44,11 +44,11 @@ for i=1:5
     Gdiff(i,1) = (Jdelta-J)/delta;
 end
 
-approximation_error = (G-Gdiff)'
+approximation_error = norm(G-Gdiff)
 
 %% CONSTRAINT
-offset = 0*ones(1,5);
-NumQ = NumQ+offset;
+offset = 2*ones(1,5);
+NumQ = NumQlqg+offset;
 
 [J,~,G,~] = robustness_constraint(NumQ,DenQ,P,F,1);
 
@@ -57,4 +57,4 @@ for i=1:5
     Gdiff(i,1) = (Jdelta-J)/delta;
 end
 
-approximation_error = (G-Gdiff)
+approximation_error = norm(G-Gdiff)

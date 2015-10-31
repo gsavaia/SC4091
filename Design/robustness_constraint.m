@@ -16,9 +16,9 @@ function [c, ceq, Gc, Gceq] = robustness_constraint(NumQ,DenQ,P,F,Dmin_inv)
     ceq = [];
 
     if( nargout > 2 )
-        delay = [1; exp(-1j*w0); exp(-2j*w0); exp(-3j*w0); exp(-4j*w0)];
+        zeta = [1; exp(-1j*w0); exp(-2j*w0); exp(-3j*w0); exp(-4j*w0)];
         
-        Gc = real( ( PQFnorm * delay ) / (NumQ * delay) );
+        Gc = real( ( PQFnorm * zeta ) / (NumQ * zeta) );
         Gceq = [];
     end
 end
