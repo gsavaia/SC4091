@@ -1,0 +1,880 @@
+main
+
+K =
+ 
+  1.172 z^2 - 0.6168 z - 1.369e-16
+  --------------------------------
+     z^2 + 0.3799 z + 6.613e-06
+ 
+Sample time: unspecified
+Discrete-time transfer function.
+
+
+Q =
+ 
+  1.172 z^4 - 1.73 z^3 + 1.348 z^2 - 0.4009 z - 8.902e-17
+  -------------------------------------------------------
+   z^4 + 0.6017 z^3 + 0.1176 z^2 + 0.01258 z + 4.298e-06
+ 
+Sample time: unspecified
+Discrete-time transfer function.
+
+
+poles_lqg =
+
+  -0.3790 + 0.0000i
+  -0.1112 + 0.1440i
+  -0.1112 - 0.1440i
+  -0.0003 + 0.0000i
+
+
+infnorm =
+
+    3.2086
+
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.2000
+
+    0.1831   -0.2480    0.1467   -0.0274   -0.0207
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.2500
+
+    0.2283   -0.3105    0.1838   -0.0347   -0.0257
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.3000
+
+    0.2769   -0.3751    0.2259   -0.0431   -0.0262
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.3500
+
+    0.3268   -0.4440    0.2753   -0.0573   -0.0236
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.4000
+
+    0.3766   -0.5143    0.3270   -0.0734   -0.0201
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.4500
+
+    0.4266   -0.5861    0.3810   -0.0913   -0.0155
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.5000
+
+    0.4759   -0.6571    0.4338   -0.1082   -0.0113
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.5500
+
+    0.5236   -0.7244    0.4798   -0.1193   -0.0097
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.6000
+
+    0.5711   -0.7919    0.5260   -0.1305   -0.0080
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.6500
+
+    0.6183   -0.8596    0.5725   -0.1418   -0.0061
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.7000
+
+    0.6642   -0.9271    0.6178   -0.1534   -0.0057
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.7500
+
+    0.7089   -0.9944    0.6621   -0.1654   -0.0065
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.8000
+
+    0.7563   -1.0637    0.7156   -0.1789   -0.0007
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.8500
+
+    0.7940   -1.1247    0.7616   -0.1858   -0.0067
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.9000
+
+    0.8291   -1.1905    0.8209   -0.2057   -0.0097
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    0.9500
+
+    0.8648   -1.2599    0.8882   -0.2334   -0.0088
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+     1
+
+    0.9005   -1.3306    0.9587   -0.2644   -0.0061
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.0500
+
+    0.9356   -1.4005    1.0283   -0.2951   -0.0036
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.1000
+
+    0.9690   -1.4637    1.0840   -0.3125   -0.0082
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.1500
+
+    1.0021   -1.5269    1.1400   -0.3302   -0.0128
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.2000
+
+    1.0352   -1.5907    1.1977   -0.3499   -0.0163
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.2500
+
+    1.0681   -1.6628    1.2810   -0.3980   -0.0034
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.3000
+
+    1.1004   -1.7344    1.3652   -0.4478    0.0106
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.3500
+
+    1.1320   -1.8054    1.4494   -0.4984    0.0253
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.4000
+
+    1.1639   -1.8693    1.5099   -0.5222    0.0238
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.4500
+
+    1.1926   -1.9350    1.5897   -0.5715    0.0388
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.5000
+
+    1.2203   -2.0004    1.6722   -0.6251    0.0568
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.5500
+
+    1.2476   -2.0650    1.7543   -0.6790    0.0751
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.6000
+
+    1.2743   -2.1289    1.8361   -0.7331    0.0936
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.6500
+
+    1.3020   -2.1917    1.9097   -0.7766    0.1051
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.7000
+
+    1.3262   -2.2508    1.9874   -0.8296    0.1243
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.7500
+
+    1.3502   -2.3094    2.0648   -0.8825    0.1434
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.8000
+
+    1.3738   -2.3676    2.1418   -0.9354    0.1627
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.8500
+
+    1.3972   -2.4253    2.2184   -0.9882    0.1820
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.9000
+
+    1.4204   -2.4826    2.2948   -1.0409    0.2013
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    1.9500
+
+    1.4434   -2.5396    2.3708   -1.0936    0.2207
+
+     1     1     1     1     1
+
+     2
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+     2
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.0500
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.1000
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.1500
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.2000
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.2500
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.3000
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.3500
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.4000
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.4500
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
+
+Local minimum found that satisfies the constraints.
+
+Optimization completed because the objective function is non-decreasing in 
+feasible directions, to within the selected value of the function tolerance,
+and constraints are satisfied to within the selected value of the constraint tolerance.
+
+<stopping criteria details>
+
+    2.5000
+
+    1.4494   -2.5544    2.3905   -1.1073    0.2257
+
+     1     1     1     1     1
+
+     1
+
+#######################################
