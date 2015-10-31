@@ -9,7 +9,7 @@ RMSn = 1;
 Klqg = dlqry(Ap,Bp,Cp,Dp,1,rho); %LQG control law
 Lkalman = dlqe(Ap,Bp,Cp,RMSd^2,RMSn^2); %Kalman gain
 
-%% DESIGN REGULATOR (LQG + Kalman)
+%% DESIGN REGULATOR (LQ + Kalman)
 [Ac,Bc,Cc,Dc] = dreg(Ap,Bp,Cp,Dp,Klqg,Lkalman); 
 Kss = ss(Ac,Bc,Cc,Dc);
 [NumK, DenK] = ss2tf(Ac,Bc,Cc,Dc);
@@ -26,6 +26,7 @@ S = feedback(1, K*P*F);
 figure; title('Sensitivity Functions (LQG)'); 
 bode(T), hold on;
 bode(S), legend('T','S');
-infnorm = hinfnorm(T) % Robust for Dmin < 1/2.138 = 0.4677
+infnorm = hinfnorm(T) 
+W_thresh = 1/infnorm % Robust for Dmin < 0.3117
 
 save('lqg_design', 'K','Q','poles_lqg');
