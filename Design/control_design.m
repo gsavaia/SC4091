@@ -60,7 +60,7 @@ X = dlyap(At, Bt*W*Bt'); %RMS STATE
 
 % Initialize optimization procedure and set options.
 opt=optimoptions('fmincon', 'Algorithm','sqp');     % SQP algorithm.
-opt=optimoptions(opt,'TolX',1e-12);       % Termination tolerance for parameters.
+opt=optimoptions(opt,'TolX',1e-6);       % Termination tolerance for parameters.
 opt=optimoptions(opt,'TolFun',1e-6);     % Termination tolerance for objective function.
 opt=optimoptions(opt,'TolCon',1e-6);     % Termination tolerance for constraints.
 opt=optimoptions(opt,'MaxFunEval',5000);
@@ -86,6 +86,7 @@ J = zeros(1, length(Dmin_inv));
 exitflag = zeros(1, length(Dmin_inv));
 
 NumQ_init = ones(1,5);%NumQ;
+NumQ_init2 = NumQ;
 
 for i=1:length(Dmin_inv)    
     [NumQ, J(i), exitflag(i), info(i)]=...
@@ -103,13 +104,13 @@ for i=1:length(Dmin_inv)
     disp('#######################################');
 end
 
-% figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
-% 
-% figure; title('Sensitivity for different values of Dmin');
-% for i=1:length(Dmin_inv(exitflag>0))
-%     Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
-%     K_minima = feedback(Q_minima, -P*F);
-%     bode( feedback(1, K_minima*P*F) ); hold on;
-% end
-% 
-% save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');
+figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
+
+figure; title('Sensitivity for different values of Dmin');
+for i=1:length(Dmin_inv(exitflag>0))
+    Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
+    K_minima = feedback(Q_minima, -P*F);
+    bode( feedback(1, K_minima*P*F) ); hold on;
+end
+
+save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');
