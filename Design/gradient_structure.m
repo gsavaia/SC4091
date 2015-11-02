@@ -20,7 +20,6 @@ Ct = [  Cq,                 Dq*Cf,         zeros(1,4),  zeros(1,1),     zeros(1,
 Dt = [ -Dq*Df*Dp,           -Dq*Df;
         Dp-Dq*Df*Dp*Dp,     -Dq*Df*Dp ];
 
-%vector = [a4, a3, a2, a1, a0];
 vector = [a0, a1, a2, a3, a4];
 
 dCu = double( jacobian(Ct(1,:), vector) )';

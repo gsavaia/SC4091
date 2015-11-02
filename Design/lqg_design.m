@@ -20,13 +20,13 @@ Q = feedback(K,P)
 poles_lqg = pole(Q) % Q is AS stable
 
 % check if solution satisfy "Robustness" requirements
-T = feedback(K*P,F);
+T = feedback(K*P*F,1);
 S = feedback(1, K*P*F);
 
 figure; title('Sensitivity Functions (LQG)'); 
 bode(T), hold on;
 bode(S), legend('T','S');
 infnorm = hinfnorm(T) 
-W_thresh = 1/infnorm % Robust for Dmin < 0.3117
+W_thresh = 1/infnorm % Robust for Dmin < 0.3839
 
 save('lqg_design', 'K','Q','poles_lqg');

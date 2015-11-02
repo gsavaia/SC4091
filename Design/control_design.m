@@ -9,7 +9,7 @@ RMSd = 4;
 RMSn = 1;
 
 %% TRANSFER FUNCTION BETWEEN [U,Y] AND [D,N] (NOISE SENSITIVITY)
-[Aq,Bq,Cq,Dq] = tf2ss(Q.num{1},Q.den{1}); % Q
+[Aq,Bq,Cq,Dq] = tf2ss(Q.num{1},Q.den{1}); % Qlqg
 [Af,Bf,Cf,Df] = tf2ss(NumF,DenF); %filter
 [Ap,Bp,Cp,Dp] = tf2ss(NumP,DenP); %plant
 
@@ -69,7 +69,7 @@ opt=optimoptions(opt,'MaxIter', 5000);   % Maximum number of iterations allowed
 opt=optimoptions(opt,'GradObj','on');    % Use gradient.
 opt=optimoptions(opt,'GradConstr','on'); % Use constraint Jacobian.
 
-%opt=optimoptions(opt,'Display','off') ;
+opt=optimoptions(opt,'Display','off') ;
 %opt=optimoptions(opt,'Display','iter');  % Display results.
 %opt=optimoptions(opt,'Diagnostics','on'); % Display diagnostic
 %opt=optimoptions(opt,'DerivativeCheck','on','FinDiffType','central');
@@ -85,29 +85,51 @@ NumQ_minima = zeros(length(Dmin_inv), 5);
 J = zeros(1, length(Dmin_inv));
 exitflag = zeros(1, length(Dmin_inv));
 
-for i=1:length(Dmin_inv)    
+for i=1:length(Dmin_inv)
     [NumQ, J(i), exitflag(i), info(i)]=...
-          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... % goal function
-                   [],[],[],[],[],[],...                               % linear constr
-                   @(NumQ) robustness_constraint(NumQ,DenQ,P,F,Dmin_inv(i)), ...      % non-linear constr
-                   opt); % options 
-    
+          fmincon( @(NumQ) noise_sensitivity(NumQ,DenQ,Cp,Dp,Cf,Df,X,W,rho,gradient),NumQ,... 
+                   [],[],[],[],[],[],...                            
+                   @(NumQ) robustness_constraint(NumQ,DenQ,P,F,Dmin_inv(i)), ...
+                   opt);
+               
     NumQ_minima(i,:) = NumQ;
-    
-    disp(Dmin_inv(i));
-    disp(NumQ);
-    disp(info(i).iterations);
-    disp(exitflag(i));
-    disp('#######################################');
 end
 
 figure, bar(Dmin_inv(exitflag>0),J(exitflag>0));
 
-figure; title('Sensitivity for different values of Dmin');
-for i=1:length(Dmin_inv(exitflag>0))
+%% SENSITIVITY FUNCTIONS
+colors = autumn(11);
+
+fig1 = figure(1);
+fig2 = figure(2);
+fig3 = figure(3);
+fig4 = figure(4);
+fig5 = figure(5);
+
+title1 = 'Sensitivity r-to-y';
+title2 = 'Sensitivity d-to-y';
+title3 = 'Sensitivity n-to-y';
+title4 = 'Sensitivity n-to-u';
+title5 = 'Sensitivity d-to-u';
+
+for i=4:14 % interval [0.5 ; 1.5]
     Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
     K_minima = feedback(Q_minima, -P*F);
-    bode( feedback(1, K_minima*P*F) ); hold on;
+    
+    figure(fig1); customBodePlot( feedback(K_minima*P,F), title1, colors(i-3,:)); hold on;
+    figure(fig2); customBodePlot( feedback(P,F*K_minima), title2, colors(i-3,:)); hold on;
+    figure(fig3); customBodePlot( feedback(F,K_minima*P), title3, colors(i-3,:)); hold on;
+    figure(fig4); customBodePlot( feedback(F*K_minima,P), title4, colors(i-3,:)); hold on;
+    figure(fig5); customBodePlot( feedback(P*F*K_minima,1), title5, colors(i-3,:)); hold on;
 end
 
+i = 9; %Dmin = 1
+Q_minima = tf(NumQ_minima(i,:), DenQ, -1);
+K_minima = feedback(Q_minima, -P*F);
+
+figure(fig1); bodeplot( feedback(K_minima*P,F), '.'); hold on;
+figure(fig2); bodeplot( feedback(P,F*K_minima), '.'); hold on;
+figure(fig3); bodeplot( feedback(F,K_minima*P), '.'); hold on;
+figure(fig4); bodeplot( feedback(F*K_minima,P), '.'); hold on;
+figure(fig5); bodeplot( feedback(P*F*K_minima,1), '.'); hold on;
 save('control_design', 'NumQ_minima', 'DenQ', 'Dmin_inv', 'J');

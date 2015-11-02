@@ -14,15 +14,15 @@ D = RMSd*randn(2000,1);
 %% Dmin = 1;
 x = 1;
 Q1 = tf( NumQ_minima( Dmin_inv==x, : ), DenQ, -1 );
-K1 = feedback(Q1, -P*F);
+K1 = feedback(Q1, -P*F); 
 Q1
 disp(['J = ', num2str(J( Dmin_inv==x ) )]);
 
 %% Dmin = 0.5 (=> 1/Dmin = 2)
 x = 2;
-Q05 = tf( NumQ_minima( Dmin_inv==x, : ), DenQ, -1 );
-K05 = feedback(Q05, -P*F);
-Q05
+Q2 = tf( NumQ_minima( Dmin_inv==x, : ), DenQ, -1 );
+K2 = feedback(Q2, -P*F);
+Q2
 disp(['J = ', num2str(J( Dmin_inv==x ))]);
 
-save('simulation', 't', 'N', 'D', 'K1', 'K05');
+save('simulation', 't', 'N', 'D', 'K1', 'K2');

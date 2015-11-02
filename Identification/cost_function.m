@@ -1,11 +1,8 @@
+%% Objective Function to be optimize
+
 function [n, J] = cost_function(x, u, ys)
 
-% a = x(1);
-% b1 = x(2);
-% b2 = x(3);
-% e0 = x(4);
-% e1 = x(5);
-% f = x(6);
+% a = x(1); % b1 = x(2); % b2 = x(3); % e0 = x(4); % e1 = x(5); % f = x(6);
 
 if nargout > 1
     J = zeros(size(u,1), size(x,1)); %J = 2000x6
