@@ -16,7 +16,7 @@ f = 0.1;
 x0 = [a;b1;b2;e0;e1;f];
 ub = [inf,inf,inf,inf,inf,inf];
 lb = [-inf,-inf,-inf,-inf,-inf,-inf];
-options = optimoptions('lsqnonlin', 'Algorithm', 'levenberg-marquardt', 'MaxFunEvals', 2000, 'DerivativeCheck', 'off', 'Jacobian', 'off');
+options = optimoptions('lsqnonlin', 'Algorithm', 'levenberg-marquardt', 'MaxFunEvals', 2000, 'DerivativeCheck', 'on', 'Jacobian', 'on');
 
 
 [x,RESNORM,RESIDUAL,EXITFLAG,OUTPUT,LAMBDA,JACOBIAN] = lsqnonlin( @(x)cost_function(x,u,ys), x0, lb, ub, options);
