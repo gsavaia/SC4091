@@ -19,11 +19,16 @@ lb = [-inf,-inf,-inf,-inf,-inf,-inf];
 options = optimoptions('lsqnonlin', 'Algorithm', 'levenberg-marquardt', 'MaxFunEvals', 2000, 'DerivativeCheck', 'off', 'Jacobian', 'off');
 
 
-x = lsqnonlin( @(x)cost_function(x,u,ys), x0, lb, ub, options);
+[x,RESNORM,RESIDUAL,EXITFLAG,OUTPUT,LAMBDA,JACOBIAN] = lsqnonlin( @(x)cost_function(x,u,ys), x0, lb, ub, options);
 disp(x);
 
 %% Check Gradient = 0 for x = x_minima
-grad = gradient_cost_function(x, u, ys);
+grad=JACOBIAN'*RESIDUAL;
+
+GRAD=sum(grad.^2)
+RES=sum(RESIDUAL.^2)
+
+EXITFLAG
 
 %% System
 NumP = [0 1 x(1)];
@@ -38,6 +43,4 @@ save('system', 'P', 'NumP', 'DenP', 'F', 'NumF', 'DenF');
 
 L = F*P
 
-estimation_error = sum( (ys - lsim(L,u)).^2 );
-
-disp(estimation_error);
+estimation_error = sum( (ys - lsim(L,u)).^2 )
